@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FitBuddy Admin Dashboard</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<main class="container">
+
+    <header>
+        <a href="/" class="brand">💪 FitBuddy</a>
+        <a href="/">Home</a>
+    </header>
+
+    <section class="hero">
+
+        <p class="eyebrow">ADMIN DASHBOARD</p>
+
+        <h1>
+            User <span>Dashboard</span>
+        </h1>
+
+        <p class="muted">
+            View registered users and their workout plans.
+        </p>
+
+    </section>
+
+    {% for user in users %}
+
+        <section class="card">
+
+            <h2>{{ user.username }}</h2>
+
+            <p class="muted">
+                User ID: {{ user.user_id }} |
+                Age: {{ user.age }} |
+                Weight: {{ user.weight }} kg |
+                Goal: {{ user.goal }} |
+                Intensity: {{ user.intensity }}
+            </p>
+
+            {% for plan in plans if plan.user_id == user.user_id %}
+
+                <details>
+
+                    <summary>
+                        Workout Plan #{{ plan.id }}
+                    </summary>
+
+                    <h3>Original Workout Plan</h3>
+
+                    <pre>{{ plan.original_plan }}</pre>
+
+                    {% if plan.updated_plan %}
+
+                        <h3>Updated Workout Plan</h3>
+
+                        <pre>{{ plan.updated_plan }}</pre>
+
+                        <p>
+                            <strong>Feedback:</strong>
+                            {{ plan.feedback }}
+                        </p>
+
+                    {% endif %}
+
+                    <h3>Nutrition Tip</h3>
+
+                    <p>{{ plan.nutrition_tip }}</p>
+
+                </details>
+
+            {% endfor %}
+
+        </section>
+
+    {% else %}
+
+        <section class="card">
+            No users registered yet.
+        </section>
+
+    {% endfor %}
+
+    <footer>
+        FitBuddy Admin Dashboard
+    </footer>
+
+</main>
+
+</body>
+</html>

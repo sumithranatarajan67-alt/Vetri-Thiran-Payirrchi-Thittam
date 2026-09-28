@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Your FitBuddy Workout Plan</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<main class="container">
+
+    <header>
+        <a href="/" class="brand">💪 FitBuddy</a>
+        <a href="/view-all-users">Dashboard</a>
+    </header>
+
+    {% if error %}
+        <div class="alert">{{ error }}</div>
+    {% endif %}
+
+    {% if success %}
+        <div class="success">{{ success }}</div>
+    {% endif %}
+
+    <section class="hero">
+
+        <p class="eyebrow">YOUR PERSONAL FITNESS PLAN</p>
+
+        <h1>
+            Let's go,
+            <span>{{ user.username }}.</span>
+        </h1>
+
+        <p class="muted">
+            Goal: {{ user.goal }} |
+            Intensity: {{ user.intensity }} |
+            Age: {{ user.age }} |
+            Weight: {{ user.weight }} kg
+        </p>
+
+    </section>
+
+    <section class="card">
+
+        <h2>
+            {% if is_updated %}
+                Updated Workout Plan
+            {% else %}
+                Your 7-Day Workout Plan
+            {% endif %}
+        </h2>
+
+        <pre>{{ workout_plan }}</pre>
+
+    </section>
+
+    <section class="card tip">
+
+        <p class="eyebrow">NUTRITION & RECOVERY</p>
+
+        <h2>Your Nutrition Tip</h2>
+
+        <p>{{ nutrition_tip }}</p>
+
+    </section>
+
+    <section class="card">
+
+        <h2>Update Your Workout Plan</h2>
+
+        <p class="muted">
+            Tell FitBuddy what you want to change.
+        </p>
+
+        <form action="/submit-feedback" method="post">
+
+            <input type="hidden"
+                   name="user_id"
+                   value="{{ user.user_id }}">
+
+            <label>
+                Your Feedback
+
+                <textarea name="feedback"
+                          rows="5"
+                          minlength="5"
+                          maxlength="1500"
+                          required
+                          placeholder="Example: Add more cardio and include an extra rest day."></textarea>
+            </label>
+
+            <button type="submit" class="button">
+                Update My Plan →
+            </button>
+
+        </form>
+
+    </section>
+
+    <a href="/" class="back">← Create Another Plan</a>
+
+    <footer>
+        Stop exercising if you feel pain.
+        Consult a qualified professional for personal medical guidance.
+    </footer>
+
+</main>
+
+</body>
+</html>
